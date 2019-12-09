@@ -35,6 +35,7 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.db.VisitRepository;
+import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.empty;
@@ -62,10 +63,7 @@ class OwnerControllerTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private OwnerRepository owners;
-
-    @MockBean
-    private VisitRepository visits;
+    private ClinicService service;
 
     private Owner george;
 
@@ -86,10 +84,10 @@ class OwnerControllerTests {
         max.setName("Max");
         max.setBirthDate(LocalDate.now());
         george.setPetsInternal(Collections.singleton(max));
-        given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
+        given(this.service.ownerById(TEST_OWNER_ID)).willReturn(george);
         Visit visit = new Visit();
         visit.setDate(LocalDate.now());
-        given(this.visits.findByPetId(max.getId())).willReturn(Collections.singletonList(visit));
+        given(this.service.visitsByPetId(max.getId())).willReturn(Collections.singletonList(visit));
     }
 
     @Test
@@ -136,7 +134,7 @@ class OwnerControllerTests {
 
     @Test
     void testProcessFindFormSuccess() throws Exception {
-        given(this.owners.findByLastName("")).willReturn(Lists.newArrayList(george, new Owner()));
+        given(this.service.ownerByLastName("")).willReturn(Lists.newArrayList(george, new Owner()));
         mockMvc.perform(get("/owners"))
             .andExpect(status().isOk())
             .andExpect(view().name("owners/ownersList"));
@@ -144,7 +142,7 @@ class OwnerControllerTests {
 
     @Test
     void testProcessFindFormByLastName() throws Exception {
-        given(this.owners.findByLastName(george.getLastName())).willReturn(Lists.newArrayList(george));
+        given(this.service.ownerByLastName(george.getLastName())).willReturn(Lists.newArrayList(george));
         mockMvc.perform(get("/owners")
             .param("lastName", "Franklin")
         )

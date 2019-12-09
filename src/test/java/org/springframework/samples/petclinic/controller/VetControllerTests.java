@@ -31,10 +31,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.samples.petclinic.controller.VetController;
 import org.springframework.samples.petclinic.db.VetRepository;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
+import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -48,7 +48,7 @@ class VetControllerTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private VetRepository vets;
+    private ClinicService service;
 
     @BeforeEach
     void setup() {
@@ -64,7 +64,7 @@ class VetControllerTests {
         radiology.setId(1);
         radiology.setName("radiology");
         helen.addSpecialty(radiology);
-        given(this.vets.findAll()).willReturn(Lists.newArrayList(james, helen));
+        given(this.service.allVets()).willReturn(Lists.newArrayList(james, helen));
     }
 
     @Test

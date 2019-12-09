@@ -16,23 +16,21 @@
 
 package org.springframework.samples.petclinic.controller;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.test.web.servlet.MockMvc;
+
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.controller.VisitController;
-import org.springframework.samples.petclinic.db.PetRepository;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.db.VisitRepository;
-import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * Test class for {@link VisitController}
@@ -48,14 +46,11 @@ class VisitControllerTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private VisitRepository visits;
-
-    @MockBean
-    private PetRepository pets;
+    private ClinicService service;
 
     @BeforeEach
     void init() {
-        given(this.pets.findById(TEST_PET_ID)).willReturn(new Pet());
+        given(this.service.petById(TEST_PET_ID)).willReturn(new Pet());
     }
 
     @Test

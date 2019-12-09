@@ -23,6 +23,7 @@ import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.db.VisitRepository;
+import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -42,13 +43,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 class VisitController {
 
-    private final VisitRepository visits;
-    private final PetRepository pets;
+    private final ClinicService service;
 
 
-    public VisitController(VisitRepository visits, PetRepository pets) {
-        this.visits = visits;
-        this.pets = pets;
+    public VisitController(ClinicService service) {
+        this.service = service;
     }
 
     @InitBinder
@@ -68,8 +67,8 @@ class VisitController {
      */
     @ModelAttribute("visit")
     public Visit loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
-        Pet pet = this.pets.findById(petId);
-        pet.setVisitsInternal(this.visits.findByPetId(petId));
+        Pet pet = this.service.petById(petId);
+        pet.setVisitsInternal(this.service.visitsByPetId(petId));
         model.put("pet", pet);
         Visit visit = new Visit();
         pet.addVisit(visit);
@@ -88,7 +87,7 @@ class VisitController {
         if (result.hasErrors()) {
             return "pets/createOrUpdateVisitForm";
         } else {
-            this.visits.save(visit);
+            this.service.save(visit);
             return "redirect:/owners/{ownerId}";
         }
     }

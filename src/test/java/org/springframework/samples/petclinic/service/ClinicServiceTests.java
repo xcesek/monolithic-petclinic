@@ -26,14 +26,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
+import org.springframework.samples.petclinic.db.OwnerRepository;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.owner.PetRepository;
+import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.vet.VetRepository;
+import org.springframework.samples.petclinic.db.VetRepository;
 import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.visit.VisitRepository;
+import org.springframework.samples.petclinic.db.VisitRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

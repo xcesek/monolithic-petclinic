@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.controller;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -31,11 +31,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.samples.petclinic.controller.PetController;
 import org.springframework.samples.petclinic.db.OwnerRepository;
 import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.owner.PetTypeFormatter;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**

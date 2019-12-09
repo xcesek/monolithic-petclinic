@@ -36,7 +36,9 @@ import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.samples.petclinic.service.PetTypeFormatter;
+import org.springframework.stereotype.Service;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
@@ -45,9 +47,13 @@ import org.springframework.test.web.servlet.MockMvc;
  * @author Colin But
  */
 @WebMvcTest(value = PetController.class,
-    includeFilters = @ComponentScan.Filter(
-                            value = PetTypeFormatter.class,
-                            type = FilterType.ASSIGNABLE_TYPE))
+    includeFilters = {
+    @ComponentScan.Filter(
+            value = PetTypeFormatter.class,
+            type = FilterType.ASSIGNABLE_TYPE)
+    }
+
+    )
 class PetControllerTests {
 
     private static final int TEST_OWNER_ID = 1;
@@ -58,19 +64,16 @@ class PetControllerTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private PetRepository pets;
-
-    @MockBean
-    private OwnerRepository owners;
+    private ClinicService service;
 
     @BeforeEach
     void setup() {
         PetType cat = new PetType();
         cat.setId(3);
         cat.setName("hamster");
-        given(this.pets.findPetTypes()).willReturn(Lists.newArrayList(cat));
-        given(this.owners.findById(TEST_OWNER_ID)).willReturn(new Owner());
-        given(this.pets.findById(TEST_PET_ID)).willReturn(new Pet());
+        given(this.service.petTypes()).willReturn(Lists.newArrayList(cat));
+        given(this.service.ownerById(TEST_OWNER_ID)).willReturn(new Owner());
+        given(this.service.petById(TEST_PET_ID)).willReturn(new Pet());
 
     }
 

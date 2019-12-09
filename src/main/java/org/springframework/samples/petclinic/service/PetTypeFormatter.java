@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
-import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.stereotype.Component;
 
@@ -37,12 +36,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class PetTypeFormatter implements Formatter<PetType> {
 
-    private final PetRepository pets;
+    private final ClinicService service;
 
 
     @Autowired
-    public PetTypeFormatter(PetRepository pets) {
-        this.pets = pets;
+    public PetTypeFormatter(ClinicService service) {
+        this.service = service;
     }
 
     @Override
@@ -52,7 +51,7 @@ public class PetTypeFormatter implements Formatter<PetType> {
 
     @Override
     public PetType parse(String text, Locale locale) throws ParseException {
-        Collection<PetType> findPetTypes = this.pets.findPetTypes();
+        Collection<PetType> findPetTypes = this.service.petTypes();
         for (PetType type : findPetTypes) {
             if (type.getName().equals(text)) {
                 return type;

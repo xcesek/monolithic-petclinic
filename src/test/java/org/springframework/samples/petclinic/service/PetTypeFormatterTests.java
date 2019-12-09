@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.service;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -30,6 +30,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.service.PetTypeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

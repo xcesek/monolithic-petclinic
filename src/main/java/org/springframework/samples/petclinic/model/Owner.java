@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.petclinic.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +32,6 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
-import org.springframework.samples.petclinic.model.Person;
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -92,7 +91,8 @@ public class Owner extends Person {
         return this.pets;
     }
 
-    protected void setPetsInternal(Set<Pet> pets) {
+    // for tests
+    public void setPetsInternal(Set<Pet> pets) {
         this.pets = pets;
     }
 

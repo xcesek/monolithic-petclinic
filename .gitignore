@@ -1,12 +1,18 @@
-target/*
-.settings/*
+# Maven
+target/
+
+# Eclipse
+.settings/
 .classpath
 .project
 .factorypath
+
 .attach_pid*
+
+# IDEA
 .idea
 *.iml
-/target
-.sts4-cache/
-.vscode/*
+
+# VSCode
+.vscode/
 _site/

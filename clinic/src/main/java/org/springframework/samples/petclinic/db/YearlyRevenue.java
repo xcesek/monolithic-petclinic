@@ -3,25 +3,26 @@ package org.springframework.samples.petclinic.db;
 public class YearlyRevenue {
 
     private Integer year;
-    private Long cost;
+    private Long total;
 
-    public YearlyRevenue(Integer year, Long cost) {
+    public YearlyRevenue(Integer year, Long total) {
         this.year = year;
-        this.cost = cost;
+        this.total = total;
     }
 
     public Integer getYear() {
         return year;
     }
 
-    public Long getCost() {
-        return cost;
+    public Long getTotal() {
+        return total;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "YearlyRevenue{" +
             "year=" + year +
-            ", cost=" + cost +
+            ", total=" + total +
             '}';
     }
 }

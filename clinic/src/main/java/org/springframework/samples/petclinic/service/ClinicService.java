@@ -3,8 +3,10 @@ package org.springframework.samples.petclinic.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.db.OwnerRepository;
 import org.springframework.samples.petclinic.db.PetRepository;
+import org.springframework.samples.petclinic.db.RevenueRepository;
 import org.springframework.samples.petclinic.db.VetRepository;
 import org.springframework.samples.petclinic.db.VisitRepository;
+import org.springframework.samples.petclinic.db.YearlyRevenue;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
@@ -29,6 +31,9 @@ public class ClinicService {
 
     @Autowired
     protected VetRepository vets;
+
+    @Autowired
+    protected RevenueRepository revenueRepository;
 
     public Collection<Owner> ownerByLastName(String lastName) {
         return owners.findByLastName(lastName);
@@ -64,5 +69,9 @@ public class ClinicService {
 
     public void save(Visit visit) {
         visits.save(visit);
+    }
+
+    public List<YearlyRevenue> listYearlyRevenue() {
+        return revenueRepository.listYearlyRevenue();
     }
 }

@@ -62,6 +62,6 @@ class PetclinicIntegrationTests {
     void testGenerateRevenueReport() {
         List<YearlyRevenue> yearlyRevenues = this.revenueRepository.listYearlyRevenue();
         assertThat(yearlyRevenues, hasSize(1));
-        assertThat(yearlyRevenues.get(0).getCost(), equalTo(800L));
+        assertThat(yearlyRevenues.get(0).getTotal(), equalTo(800L));
     }
 }

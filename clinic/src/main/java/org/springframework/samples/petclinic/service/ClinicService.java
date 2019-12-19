@@ -21,19 +21,19 @@ import java.util.List;
 public class ClinicService {
 
     @Autowired
-    protected OwnerRepository owners;
+    private OwnerRepository owners;
 
     @Autowired
-    protected PetRepository pets;
+    private PetRepository pets;
 
     @Autowired
-    protected VisitRepository visits;
+    private VisitRepository visits;
 
     @Autowired
-    protected VetRepository vets;
+    private VetRepository vets;
 
     @Autowired
-    protected RevenueRepository revenueRepository;
+    private RevenueRepository revenueRepository;
 
     public Collection<Owner> ownerByLastName(String lastName) {
         return owners.findByLastName(lastName);

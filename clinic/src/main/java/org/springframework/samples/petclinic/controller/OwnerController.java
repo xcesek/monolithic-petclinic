@@ -15,10 +15,8 @@
  */
 package org.springframework.samples.petclinic.controller;
 
-import org.springframework.samples.petclinic.db.OwnerRepository;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.db.VisitRepository;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -111,7 +109,8 @@ class OwnerController {
     }
 
     @PostMapping("/owners/{ownerId}/edit")
-    public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result, @PathVariable("ownerId") int ownerId) {
+    public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result,
+            @PathVariable("ownerId") int ownerId) {
         if (result.hasErrors()) {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {

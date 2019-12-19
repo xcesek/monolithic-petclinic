@@ -15,8 +15,6 @@
  */
 package org.springframework.samples.petclinic.controller;
 
-import org.springframework.samples.petclinic.db.OwnerRepository;
-import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
@@ -78,7 +76,7 @@ class PetController {
 
     @PostMapping("/pets/new")
     public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {
-        if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null){
+        if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
             result.rejectValue("name", "duplicate", "already exists");
         }
         owner.addPet(pet);

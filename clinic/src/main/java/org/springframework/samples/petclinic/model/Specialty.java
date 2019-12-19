@@ -15,8 +15,6 @@
  */
 package org.springframework.samples.petclinic.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -27,6 +25,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "specialties")
-public class Specialty extends NamedEntity implements Serializable {
+public class Specialty extends NamedEntity {
 
 }

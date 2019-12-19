@@ -37,6 +37,7 @@ public class PetValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         Pet pet = (Pet) obj;
         String name = pet.getName();
+
         // name validation
         if (!StringUtils.hasLength(name)) {
             errors.rejectValue("name", REQUIRED, REQUIRED);
@@ -60,6 +61,5 @@ public class PetValidator implements Validator {
     public boolean supports(Class<?> clazz) {
         return Pet.class.isAssignableFrom(clazz);
     }
-
 
 }

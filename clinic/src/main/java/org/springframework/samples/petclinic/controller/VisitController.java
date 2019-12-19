@@ -19,10 +19,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.db.VisitRepository;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -61,9 +59,6 @@ class VisitController {
      * - Make sure we always have fresh data
      * - Since we do not use the session scope, make sure that Pet object always has an id
      * (Even though id is not part of the form fields)
-     *
-     * @param petId
-     * @return Pet
      */
     @ModelAttribute("visit")
     public Visit loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {

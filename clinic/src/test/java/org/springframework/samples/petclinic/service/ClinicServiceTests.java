@@ -13,10 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.startsWith;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -36,15 +41,21 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Integration test of the Service and the Repository layer.
  * <p>
- * ClinicServiceSpringDataJpaTests subclasses benefit from the following services provided by the Spring
- * TestContext Framework: </p> <ul> <li><strong>Spring IoC container caching</strong> which spares us unnecessary set up
- * time between test execution.</li> <li><strong>Dependency Injection</strong> of test fixture instances, meaning that
- * we don't need to perform application context lookups. See the use of {@link Autowired @Autowired} on the <code>{@link
- * ClinicServiceTests#service clinicService}</code> instance variable, which uses autowiring <em>by
- * type</em>. <li><strong>Transaction management</strong>, meaning each test method is executed in its own transaction,
- * which is automatically rolled back by default. Thus, even if tests insert or otherwise change database state, there
- * is no need for a teardown or cleanup script. <li> An {@link org.springframework.context.ApplicationContext
- * ApplicationContext} is also inherited and can be used for explicit bean lookup if necessary. </li> </ul>
+ * ClinicServiceSpringDataJpaTests subclasses benefit from the following services provided by the Spring TestContext
+ * Framework:
+ * </p>
+ * <ul>
+ * <li><strong>Spring IoC container caching</strong> which spares us unnecessary set up time between test
+ * execution.</li>
+ * <li><strong>Dependency Injection</strong> of test fixture instances, meaning that we don't need to perform
+ * application context lookups. See the use of {@link Autowired @Autowired} on the <code>{@link
+ * ClinicServiceTests#service clinicService}</code> instance variable, which uses autowiring <em>by type</em>.
+ * <li><strong>Transaction management</strong>, meaning each test method is executed in its own transaction, which is
+ * automatically rolled back by default. Thus, even if tests insert or otherwise change database state, there is no need
+ * for a teardown or cleanup script.
+ * <li>An {@link org.springframework.context.ApplicationContext ApplicationContext} is also inherited and can be used
+ * for explicit bean lookup if necessary.</li>
+ * </ul>
  *
  * @author Ken Krebs
  * @author Rod Johnson
@@ -57,24 +68,24 @@ import org.springframework.transaction.annotation.Transactional;
 class ClinicServiceTests {
 
     @Autowired
-    protected ClinicService service;
+    ClinicService service;
 
     @Test
     void shouldFindOwnersByLastName() {
         Collection<Owner> owners = service.ownerByLastName("Davis");
-        assertThat(owners).hasSize(2);
+        assertThat(owners, hasSize(2));
 
         owners = service.ownerByLastName("Daviss");
-        assertThat(owners).isEmpty();
+        assertThat(owners, empty());
     }
 
     @Test
     void shouldFindSingleOwnerWithPet() {
         Owner owner = service.ownerById(1);
-        assertThat(owner.getLastName()).startsWith("Franklin");
-        assertThat(owner.getPets()).hasSize(1);
-        assertThat(owner.getPets().get(0).getType()).isNotNull();
-        assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("cat");
+        assertThat(owner.getLastName(), startsWith("Franklin"));
+        assertThat(owner.getPets(), hasSize(1));
+        assertThat(owner.getPets().get(0).getType(), notNullValue());
+        assertThat(owner.getPets().get(0).getType().getName(), equalTo("cat"));
     }
 
     @Test
@@ -90,10 +101,10 @@ class ClinicServiceTests {
         owner.setCity("Wollongong");
         owner.setTelephone("4444444444");
         service.save(owner);
-        assertThat(owner.getId().longValue()).isNotEqualTo(0);
+        assertThat(owner.getId().longValue(), not(equalTo(0)));
 
         owners = service.ownerByLastName("Schultz");
-        assertThat(owners.size()).isEqualTo(found + 1);
+        assertThat(owners.size(), equalTo(found + 1));
     }
 
     @Test
@@ -108,14 +119,14 @@ class ClinicServiceTests {
 
         // retrieving new name from database
         owner = service.ownerById(1);
-        assertThat(owner.getLastName()).isEqualTo(newLastName);
+        assertThat(owner.getLastName(), equalTo(newLastName));
     }
 
     @Test
     void shouldFindPetWithCorrectId() {
         Pet pet7 = service.petById(7);
-        assertThat(pet7.getName()).startsWith("Samantha");
-        assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
+        assertThat(pet7.getName(), startsWith("Samantha"));
+        assertThat(pet7.getOwner().getFirstName(), equalTo("Jean"));
 
     }
 
@@ -124,9 +135,9 @@ class ClinicServiceTests {
         Collection<PetType> petTypes = service.petTypes();
 
         PetType petType1 = EntityUtils.getById(petTypes, PetType.class, 1);
-        assertThat(petType1.getName()).isEqualTo("cat");
+        assertThat(petType1.getName(), equalTo("cat"));
         PetType petType4 = EntityUtils.getById(petTypes, PetType.class, 4);
-        assertThat(petType4.getName()).isEqualTo("snake");
+        assertThat(petType4.getName(), equalTo("snake"));
     }
 
     @Test
@@ -141,20 +152,20 @@ class ClinicServiceTests {
         pet.setType(EntityUtils.getById(types, PetType.class, 2));
         pet.setBirthDate(LocalDate.now());
         owner6.addPet(pet);
-        assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+        assertThat(owner6.getPets().size(), equalTo(found + 1));
 
         service.save(pet);
         service.save(owner6);
 
         owner6 = service.ownerById(6);
-        assertThat(owner6.getPets().size()).isEqualTo(found + 1);
+        assertThat(owner6.getPets().size(), equalTo(found + 1));
         // checks that id has been generated
-        assertThat(pet.getId()).isNotNull();
+        assertThat(pet.getId(), notNullValue());
     }
 
     @Test
     @Transactional
-    void shouldUpdatePetName() throws Exception {
+    void shouldUpdatePetName() {
         Pet pet7 = service.petById(7);
         String oldName = pet7.getName();
 
@@ -163,7 +174,7 @@ class ClinicServiceTests {
         service.save(pet7);
 
         pet7 = service.petById(7);
-        assertThat(pet7.getName()).isEqualTo(newName);
+        assertThat(pet7.getName(), equalTo(newName));
     }
 
     @Test
@@ -171,10 +182,10 @@ class ClinicServiceTests {
         Collection<Vet> vets = service.allVets();
 
         Vet vet = EntityUtils.getById(vets, Vet.class, 3);
-        assertThat(vet.getLastName()).isEqualTo("Douglas");
-        assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
-        assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
-        assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
+        assertThat(vet.getLastName(), equalTo("Douglas"));
+        assertThat(vet.getNrOfSpecialties(), equalTo(2));
+        assertThat(vet.getSpecialties().get(0).getName(), equalTo("dentistry"));
+        assertThat(vet.getSpecialties().get(1).getName(), equalTo("surgery"));
     }
 
     @Test
@@ -190,17 +201,17 @@ class ClinicServiceTests {
         service.save(pet7);
 
         pet7 = service.petById(7);
-        assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
-        assertThat(visit.getId()).isNotNull();
+        assertThat(pet7.getVisits().size(), equalTo(found + 1));
+        assertThat(visit.getId(), notNullValue());
     }
 
     @Test
-    void shouldFindVisitsByPetId() throws Exception {
+    void shouldFindVisitsByPetId() {
         Collection<Visit> visits = service.visitsByPetId(7);
-        assertThat(visits).hasSize(2);
+        assertThat(visits, hasSize(2));
         Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
-        assertThat(visitArr[0].getDate()).isNotNull();
-        assertThat(visitArr[0].getPetId()).isEqualTo(7);
+        assertThat(visitArr[0].getDate(), notNullValue());
+        assertThat(visitArr[0].getPetId(), equalTo(7));
     }
 
 }

@@ -19,7 +19,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.util.SerializationUtils;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * @author Dave Syer
@@ -32,11 +33,12 @@ class VetTests {
         vet.setFirstName("Zaphod");
         vet.setLastName("Beeblebrox");
         vet.setId(123);
-        Vet other = (Vet) SerializationUtils
-                .deserialize(SerializationUtils.serialize(vet));
-        assertThat(other.getFirstName()).isEqualTo(vet.getFirstName());
-        assertThat(other.getLastName()).isEqualTo(vet.getLastName());
-        assertThat(other.getId()).isEqualTo(vet.getId());
+
+        Vet other = (Vet) SerializationUtils.deserialize(SerializationUtils.serialize(vet));
+
+        assertThat(other.getFirstName(), equalTo(vet.getFirstName()));
+        assertThat(other.getLastName(), equalTo(vet.getLastName()));
+        assertThat(other.getId(), equalTo(vet.getId()));
     }
 
 }

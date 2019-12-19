@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.springframework.samples.petclinic.controller;
 
 import static org.mockito.BDDMockito.given;
@@ -23,7 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import org.assertj.core.util.Lists;
+import java.util.Collections;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +31,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.samples.petclinic.db.OwnerRepository;
-import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.samples.petclinic.service.PetTypeFormatter;
-import org.springframework.stereotype.Service;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Test class for the {@link PetController}
- *
  * @author Colin But
  */
 @WebMvcTest(value = PetController.class,
@@ -52,29 +47,26 @@ import org.springframework.test.web.servlet.MockMvc;
             value = PetTypeFormatter.class,
             type = FilterType.ASSIGNABLE_TYPE)
     }
-
-    )
+)
 class PetControllerTests {
 
     private static final int TEST_OWNER_ID = 1;
     private static final int TEST_PET_ID = 1;
 
-
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @MockBean
-    private ClinicService service;
+    ClinicService service;
 
     @BeforeEach
     void setup() {
         PetType cat = new PetType();
         cat.setId(3);
         cat.setName("hamster");
-        given(this.service.petTypes()).willReturn(Lists.newArrayList(cat));
+        given(this.service.petTypes()).willReturn(Collections.singletonList(cat));
         given(this.service.ownerById(TEST_OWNER_ID)).willReturn(new Owner());
         given(this.service.petById(TEST_PET_ID)).willReturn(new Pet());
-
     }
 
     @Test

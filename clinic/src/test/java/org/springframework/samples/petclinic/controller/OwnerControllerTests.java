@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.springframework.samples.petclinic.controller;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.assertj.core.util.Lists;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,12 +28,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.samples.petclinic.controller.OwnerController;
-import org.springframework.samples.petclinic.db.OwnerRepository;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.db.VisitRepository;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -50,8 +47,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 /**
- * Test class for {@link OwnerController}
- *
  * @author Colin But
  */
 @WebMvcTest(OwnerController.class)
@@ -60,12 +55,12 @@ class OwnerControllerTests {
     private static final int TEST_OWNER_ID = 1;
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @MockBean
-    private ClinicService service;
+    ClinicService service;
 
-    private Owner george;
+    Owner george;
 
     @BeforeEach
     void setup() {
@@ -76,6 +71,7 @@ class OwnerControllerTests {
         george.setAddress("110 W. Liberty St.");
         george.setCity("Madison");
         george.setTelephone("6085551023");
+        
         Pet max = new Pet();
         PetType dog = new PetType();
         dog.setName("dog");
@@ -83,8 +79,10 @@ class OwnerControllerTests {
         max.setType(dog);
         max.setName("Max");
         max.setBirthDate(LocalDate.now());
+        
         george.setPetsInternal(Collections.singleton(max));
         given(this.service.ownerById(TEST_OWNER_ID)).willReturn(george);
+        
         Visit visit = new Visit();
         visit.setDate(LocalDate.now());
         given(this.service.visitsByPetId(max.getId())).willReturn(Collections.singletonList(visit));
@@ -134,7 +132,7 @@ class OwnerControllerTests {
 
     @Test
     void testProcessFindFormSuccess() throws Exception {
-        given(this.service.ownerByLastName("")).willReturn(Lists.newArrayList(george, new Owner()));
+        given(this.service.ownerByLastName("")).willReturn(Arrays.asList(george, new Owner()));
         mockMvc.perform(get("/owners"))
             .andExpect(status().isOk())
             .andExpect(view().name("owners/ownersList"));
@@ -142,7 +140,7 @@ class OwnerControllerTests {
 
     @Test
     void testProcessFindFormByLastName() throws Exception {
-        given(this.service.ownerByLastName(george.getLastName())).willReturn(Lists.newArrayList(george));
+        given(this.service.ownerByLastName(george.getLastName())).willReturn(Arrays.asList(george));
         mockMvc.perform(get("/owners")
             .param("lastName", "Franklin")
         )

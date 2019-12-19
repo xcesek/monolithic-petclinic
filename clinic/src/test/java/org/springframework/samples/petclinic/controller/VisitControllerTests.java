@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.springframework.samples.petclinic.controller;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 /**
- * Test class for {@link VisitController}
- *
  * @author Colin But
  */
 @WebMvcTest(VisitController.class)
@@ -43,10 +40,10 @@ class VisitControllerTests {
     private static final int TEST_PET_ID = 1;
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @MockBean
-    private ClinicService service;
+    ClinicService service;
 
     @BeforeEach
     void init() {
@@ -55,29 +52,29 @@ class VisitControllerTests {
 
     @Test
     void testInitNewVisitForm() throws Exception {
-        mockMvc.perform(get("/owners/*/pets/{petId}/visits/new", TEST_PET_ID))
-            .andExpect(status().isOk())
-            .andExpect(view().name("pets/createOrUpdateVisitForm"));
+        mockMvc.perform(get("/owners/*/pets/{petId}/visits/new", TEST_PET_ID)) //
+                .andExpect(status().isOk()) //
+                .andExpect(view().name("pets/createOrUpdateVisitForm"));
     }
 
     @Test
     void testProcessNewVisitFormSuccess() throws Exception {
-        mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID)
-            .param("name", "George")
-            .param("description", "Visit Description")
-        )
-            .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/owners/{ownerId}"));
+        mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID) //
+                .param("name", "George") //
+                .param("description", "Visit Description") //
+        ) //
+                .andExpect(status().is3xxRedirection()) //
+                .andExpect(view().name("redirect:/owners/{ownerId}"));
     }
 
     @Test
     void testProcessNewVisitFormHasErrors() throws Exception {
-        mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID)
-            .param("name", "George")
-        )
-            .andExpect(model().attributeHasErrors("visit"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("pets/createOrUpdateVisitForm"));
+        mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID) //
+                .param("name", "George") //
+        ) //
+                .andExpect(model().attributeHasErrors("visit")) //
+                .andExpect(status().isOk()) //
+                .andExpect(view().name("pets/createOrUpdateVisitForm"));
     }
 
 }

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.springframework.samples.petclinic;
 
 import org.junit.jupiter.api.Test;
@@ -37,23 +36,23 @@ import static org.hamcrest.Matchers.hasSize;
 class PetclinicIntegrationTests {
 
     @Autowired
-    private VetRepository vets;
+    VetRepository vetsRepository;
 
     @Autowired
-    private VisitRepository visits;
+    VisitRepository visitsRepository;
 
     @Autowired
-    private RevenueRepository revenueRepository;
+    RevenueRepository revenueRepository;
 
     @Test
     void testFindVets() {
-        Collection<Vet> all = vets.findAll();
+        Collection<Vet> all = vetsRepository.findAll();
         assertThat(all, hasSize(6));
     }
 
     @Test
     void testFindVisits() {
-        List<Visit> visits = this.visits.findByPetId(7);
+        List<Visit> visits = this.visitsRepository.findByPetId(7);
         assertThat(visits, hasSize(2));
         assertThat(visits.get(0).getCost(), equalTo(100));
     }

@@ -23,7 +23,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.BaseEntity;
 
 /**
  * Simple JavaBean domain object representing a visit.
@@ -40,11 +39,14 @@ public class Visit extends BaseEntity {
     private LocalDate date;
 
     @NotEmpty
-    @Column(name = "description")
+    @Column
     private String description;
 
     @Column(name = "pet_id")
     private Integer petId;
+
+    @Column
+    private Integer cost;
 
     /**
      * Creates a new instance of Visit for the current date
@@ -77,4 +79,11 @@ public class Visit extends BaseEntity {
         this.petId = petId;
     }
 
+    public Integer getCost() {
+        return cost;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
 }

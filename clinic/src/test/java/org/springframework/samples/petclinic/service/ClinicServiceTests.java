@@ -185,6 +185,7 @@ class ClinicServiceTests {
         Visit visit = new Visit();
         pet7.addVisit(visit);
         visit.setDescription("test");
+        visit.setCost(100);
         service.save(visit);
         service.save(pet7);
 

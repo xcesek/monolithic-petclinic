@@ -20,6 +20,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.samples.petclinic.db.VetRepository;
+import org.springframework.samples.petclinic.db.VisitRepository;
+import org.springframework.samples.petclinic.model.Vet;
+import org.springframework.samples.petclinic.model.Visit;
+
+import java.util.Collection;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 
 @SpringBootTest
 class PetclinicIntegrationTests {
@@ -27,8 +37,19 @@ class PetclinicIntegrationTests {
     @Autowired
     private VetRepository vets;
 
+    @Autowired
+    private VisitRepository visits;
+
     @Test
-    void testFindAll() throws Exception {
-        vets.findAll();
+    void testFindVets() {
+        Collection<Vet> all = vets.findAll();
+        assertThat(all, hasSize(6));
+    }
+
+    @Test
+    void testFindVisits() {
+        List<Visit> visits = this.visits.findByPetId(7);
+        assertThat(visits, hasSize(2));
+        assertThat(visits.get(0).getCost(), equalTo(100));
     }
 }

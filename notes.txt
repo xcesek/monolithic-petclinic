@@ -15,7 +15,8 @@ TODOs für den Code für master Branch
 
 * get rid of "failed to perform fetch" on mvn test
 
-* remove xml api from vets would easy the exercise, also remove Vets class, because no XML,
-  remove XML binding library etc. only use vets list in model
+* remove XML binding library etc. only use vets list in model
 
 * @DataJpaTest vs wie alles + datenbank am besten? ClinicServiceTests
+
+* alle views überprüfen ob benutzt

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html xmlns:th="https://www.thymeleaf.org"
   th:replace="~{fragments/layout :: layout (~{::body},'vets')}">
 
@@ -15,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr th:each="vet : ${vets.vetList}">
+      <tr th:each="vet : ${vets}">
         <td th:text="${vet.firstName + ' ' + vet.lastName}"></td>
         <td><span th:each="specialty : ${vet.specialties}"
           th:text="${specialty.name + ' '}" /> <span
@@ -23,5 +22,7 @@
       </tr>
     </tbody>
   </table>
+
 </body>
+
 </html>

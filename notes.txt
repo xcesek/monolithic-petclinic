@@ -8,15 +8,7 @@ TODOs für den Code für master Branch
 * Make sure it works with Java 11 as Runtime/Compile
 * Rename GitHub project to monolothic-pet…
   * Rename Maven group usw. Maybe rename packages?
-* Remove excessive/not needed dependencies
-* Debug why UI is so ugly, should be nice like in screenshot
 * Write descriptive Readme
 * add us to license holders
 
-* get rid of "failed to perform fetch" on mvn test
-
-* remove XML binding library etc. only use vets list in model
-
 * @DataJpaTest vs wie alles + datenbank am besten? ClinicServiceTests
-
-* alle views überprüfen ob benutzt

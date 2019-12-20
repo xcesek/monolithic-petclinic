@@ -5,7 +5,6 @@ TODOs für den Code für master Branch
 
 * stabilise tests! problems with include @Service or @Component only
 
-* Make sure it works with Java 11 as Runtime/Compile
 * Rename GitHub project to monolothic-pet…
   * Rename Maven group usw. Maybe rename packages?
 * Write descriptive Readme

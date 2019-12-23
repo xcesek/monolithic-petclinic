@@ -7,13 +7,17 @@ TODOs für den Code für master Branch
 
 * Rename GitHub project to monolothic-pet…
   * Rename Maven group usw. Maybe rename packages?
+  * Gregor: ok. have to agree on package name. i suggest: monolithic.petclinic
 * Write descriptive Readme
 * add us to license holders
 
 * @DataJpaTest vs wie alles + datenbank am besten? ClinicServiceTests
 
 * Remove Warning
-[WARNING] Less warnings are:
-[WARNING] 10:1 Cannot link source map. Css result location is not know and could not be deduced from input less source..
-https://github.com/wro4j/wro4j/issues/517
-wasted 2hours trying to remove this warning
+    [WARNING] Less warnings are:
+    [WARNING] 10:1 Cannot link source map. Css result location is not know and could not be deduced from input less source..
+    https://github.com/wro4j/wro4j/issues/517
+    wasted 2hours trying to remove this warning
+
+    we can only get rid of it, if we remove less. but it would make a ui restyling harder.
+    so we should first restyle the ui, then remove less. will do that soon

@@ -15,27 +15,19 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import org.springframework.samples.petclinic.controller.PetForm;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-/**
- * <code>Validator</code> for <code>Pet</code> forms.
- * <p>
- * We're not using Bean Validation annotations here because it is easier to define such validation rule in Java.
- * </p>
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- */
-public class PetValidator implements Validator {
+public class PetFormValidator implements Validator {
 
     private static final String REQUIRED = "required";
 
     @Override
     public void validate(Object obj, Errors errors) {
-        Pet pet = (Pet) obj;
+        PetForm pet = (PetForm) obj;
         String name = pet.getName();
 
         // name validation
@@ -59,7 +51,7 @@ public class PetValidator implements Validator {
      */
     @Override
     public boolean supports(Class<?> clazz) {
-        return Pet.class.isAssignableFrom(clazz);
+        return PetForm.class.isAssignableFrom(clazz);
     }
 
 }

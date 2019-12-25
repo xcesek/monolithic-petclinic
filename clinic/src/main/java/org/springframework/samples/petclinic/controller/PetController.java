@@ -19,7 +19,7 @@ import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.ClinicService;
-import org.springframework.samples.petclinic.service.PetValidator;
+import org.springframework.samples.petclinic.service.PetFormValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * @author Juergen Hoeller
@@ -61,27 +62,30 @@ class PetController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @InitBinder("pet")
-    public void initPetBinder(WebDataBinder dataBinder) {
-        dataBinder.setValidator(new PetValidator());
+    @InitBinder("petForm")
+    public void initpetFormBinder(WebDataBinder dataBinder) {
+        dataBinder.setValidator(new PetFormValidator());
     }
 
     @GetMapping("/pets/new")
     public String initCreationForm(Owner owner, ModelMap model) {
         Pet pet = new Pet();
         owner.addPet(pet);
-        model.put("pet", pet);
+        PetForm petForm = toForm(pet);
+        model.put("petForm", petForm);
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping("/pets/new")
-    public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {
-        if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
+    public String processCreationForm(Owner owner, @Valid PetForm petForm, BindingResult result, ModelMap model) {
+        if (StringUtils.hasLength(petForm.getName()) && petForm.isNew() && owner.getPet(petForm.getName(), true) != null) {
             result.rejectValue("name", "duplicate", "already exists");
         }
+        Pet pet = toEntity(petForm);
         owner.addPet(pet);
         if (result.hasErrors()) {
-            model.put("pet", pet);
+            petForm.setOwner(owner);
+            model.put("petForm", petForm);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
             this.service.save(pet);
@@ -92,21 +96,45 @@ class PetController {
     @GetMapping("/pets/{petId}/edit")
     public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) {
         Pet pet = this.service.petById(petId);
-        model.put("pet", pet);
+        model.put("petForm", toForm(pet));
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping("/pets/{petId}/edit")
-    public String processUpdateForm(@Valid Pet pet, BindingResult result, Owner owner, ModelMap model) {
+    public String processUpdateForm(@Valid PetForm petForm, BindingResult result, Owner owner, ModelMap model) {
         if (result.hasErrors()) {
-            pet.setOwner(owner);
-            model.put("pet", pet);
+            petForm.setOwner(owner);
+            model.put("petForm", petForm);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
+            Pet pet = toEntity(petForm);
             owner.addPet(pet);
             this.service.save(pet);
             return "redirect:/owners/{ownerId}";
         }
+    }
+
+    private Pet toEntity(PetForm petForm) {
+        Pet pet = new Pet();
+        pet.setId(petForm.getId());
+        pet.setName(petForm.getName());
+        Optional<PetType> typeByName = this.service.petTypes()
+            .stream()
+            .filter(t -> t.getName().equals(petForm.getType()))
+            .findFirst();
+        typeByName.ifPresent(pet::setType);
+        pet.setBirthDate(petForm.getBirthDate());
+        return pet;
+    }
+
+    private PetForm toForm(Pet pet) {
+        PetForm petForm = new PetForm();
+        petForm.setId(pet.getId());
+        petForm.setName(pet.getName());
+        petForm.setType(pet.getType() != null ? pet.getType().getName() : null);
+        petForm.setBirthDate(pet.getBirthDate());
+        petForm.setOwner(pet.getOwner());
+        return petForm;
     }
 
 }

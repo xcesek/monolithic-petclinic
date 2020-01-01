@@ -29,6 +29,7 @@ import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
@@ -64,7 +65,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michael Isvy
  * @author Dave Syer
  */
-@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@SpringBootTest
 class ClinicServiceTests {
 
     @Autowired
@@ -127,7 +128,6 @@ class ClinicServiceTests {
         Pet pet7 = service.petById(7);
         assertThat(pet7.getName(), startsWith("Samantha"));
         assertThat(pet7.getOwner().getFirstName(), equalTo("Jean"));
-
     }
 
     @Test
@@ -209,7 +209,7 @@ class ClinicServiceTests {
     void shouldFindVisitsByPetId() {
         Collection<Visit> visits = service.visitsByPetId(7);
         assertThat(visits, hasSize(2));
-        Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
+        Visit[] visitArr = visits.toArray(new Visit[0]);
         assertThat(visitArr[0].getDate(), notNullValue());
         assertThat(visitArr[0].getPetId(), equalTo(7));
     }

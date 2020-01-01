@@ -33,7 +33,7 @@ import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(VetController.class)
+@WebMvcTest
 class VetControllerTests {
 
     @Autowired

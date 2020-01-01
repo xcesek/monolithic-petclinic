@@ -49,7 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Colin But
  */
-@WebMvcTest(OwnerController.class)
+@WebMvcTest
 class OwnerControllerTests {
 
     private static final int TEST_OWNER_ID = 1;
@@ -216,10 +216,7 @@ class OwnerControllerTests {
                     @SuppressWarnings("unchecked")
                     List<Pet> pets = (List<Pet>) item;
                     Pet pet = pets.get(0);
-                    if (pet.getVisits().isEmpty()) {
-                        return false;
-                    }
-                    return true;
+                    return !pet.getVisits().isEmpty();
                 }
 
                 @Override

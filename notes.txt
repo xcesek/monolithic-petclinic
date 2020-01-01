@@ -3,8 +3,6 @@ TODOs für den Code für master Branch
 
 * Tests für Management Controller.
 
-* stabilise tests! problems with include @Service or @Component only
-
 * Rename GitHub project to monolothic-pet…
   * Rename Maven group usw. Maybe rename packages?
   * Gregor: ok. have to agree on package name. i suggest: monolithic.petclinic

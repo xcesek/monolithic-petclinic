@@ -18,6 +18,7 @@ package org.springframework.samples.petclinic.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.samples.petclinic.db.YearlyRevenue;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -199,10 +201,18 @@ class ClinicServiceTests {
     @Test
     void shouldFindVisitsByPetId() {
         Collection<Visit> visits = service.visitsByPetId(7);
+
         assertThat(visits).hasSize(2);
         Visit[] visitArr = visits.toArray(new Visit[0]);
         assertThat(visitArr[0].getDate()).isNotNull();
         assertThat(visitArr[0].getPetId()).isEqualTo(7);
+        assertThat(visitArr[0].getCost()).isEqualTo(100);
     }
 
+    @Test
+    void shouldListYearlyRevenue() {
+        List<YearlyRevenue> yearlyRevenues = service.listYearlyRevenue();
+        assertThat(yearlyRevenues).hasSize(1);
+        assertThat(yearlyRevenues.get(0).getTotal()).isEqualTo(800L);
+    }
 }

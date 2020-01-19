@@ -15,29 +15,20 @@
  */
 package org.springframework.samples.petclinic.service;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.startsWith;
-
-import java.time.LocalDate;
-import java.util.Collection;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration test of the Service and the Repository layer.
@@ -74,19 +65,19 @@ class ClinicServiceTests {
     @Test
     void shouldFindOwnersByLastName() {
         Collection<Owner> owners = service.ownerByLastName("Davis");
-        assertThat(owners, hasSize(2));
+        assertThat(owners).hasSize(2);
 
         owners = service.ownerByLastName("Daviss");
-        assertThat(owners, empty());
+        assertThat(owners).isEmpty();
     }
 
     @Test
     void shouldFindSingleOwnerWithPet() {
         Owner owner = service.ownerById(1);
-        assertThat(owner.getLastName(), startsWith("Franklin"));
-        assertThat(owner.getPets(), hasSize(1));
-        assertThat(owner.getPets().get(0).getType(), notNullValue());
-        assertThat(owner.getPets().get(0).getType().getName(), equalTo("cat"));
+        assertThat(owner.getLastName()).startsWith("Franklin");
+        assertThat(owner.getPets()).hasSize(1);
+        assertThat(owner.getPets().get(0).getType()).isNotNull();
+        assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("cat");
     }
 
     @Test
@@ -102,10 +93,10 @@ class ClinicServiceTests {
         owner.setCity("Wollongong");
         owner.setTelephone("4444444444");
         service.save(owner);
-        assertThat(owner.getId().longValue(), not(equalTo(0)));
+        assertThat(owner.getId().longValue()).isNotEqualTo(0);
 
         owners = service.ownerByLastName("Schultz");
-        assertThat(owners.size(), equalTo(found + 1));
+        assertThat(owners.size()).isEqualTo(found + 1);
     }
 
     @Test
@@ -120,14 +111,14 @@ class ClinicServiceTests {
 
         // retrieving new name from database
         owner = service.ownerById(1);
-        assertThat(owner.getLastName(), equalTo(newLastName));
+        assertThat(owner.getLastName()).isEqualTo(newLastName);
     }
 
     @Test
     void shouldFindPetWithCorrectId() {
         Pet pet7 = service.petById(7);
-        assertThat(pet7.getName(), startsWith("Samantha"));
-        assertThat(pet7.getOwner().getFirstName(), equalTo("Jean"));
+        assertThat(pet7.getName()).startsWith("Samantha");
+        assertThat(pet7.getOwner().getFirstName()).isEqualTo("Jean");
     }
 
     @Test
@@ -135,9 +126,9 @@ class ClinicServiceTests {
         Collection<PetType> petTypes = service.petTypes();
 
         PetType petType1 = EntityUtils.getById(petTypes, PetType.class, 1);
-        assertThat(petType1.getName(), equalTo("cat"));
+        assertThat(petType1.getName()).isEqualTo("cat");
         PetType petType4 = EntityUtils.getById(petTypes, PetType.class, 4);
-        assertThat(petType4.getName(), equalTo("snake"));
+        assertThat(petType4.getName()).isEqualTo("snake");
     }
 
     @Test
@@ -152,15 +143,15 @@ class ClinicServiceTests {
         pet.setType(EntityUtils.getById(types, PetType.class, 2));
         pet.setBirthDate(LocalDate.now());
         owner6.addPet(pet);
-        assertThat(owner6.getPets().size(), equalTo(found + 1));
+        assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 
         service.save(pet);
         service.save(owner6);
 
         owner6 = service.ownerById(6);
-        assertThat(owner6.getPets().size(), equalTo(found + 1));
+        assertThat(owner6.getPets().size()).isEqualTo(found + 1);
         // checks that id has been generated
-        assertThat(pet.getId(), notNullValue());
+        assertThat(pet.getId()).isNotNull();
     }
 
     @Test
@@ -174,7 +165,7 @@ class ClinicServiceTests {
         service.save(pet7);
 
         pet7 = service.petById(7);
-        assertThat(pet7.getName(), equalTo(newName));
+        assertThat(pet7.getName()).isEqualTo(newName);
     }
 
     @Test
@@ -182,10 +173,10 @@ class ClinicServiceTests {
         Collection<Vet> vets = service.allVets();
 
         Vet vet = EntityUtils.getById(vets, Vet.class, 3);
-        assertThat(vet.getLastName(), equalTo("Douglas"));
-        assertThat(vet.getNrOfSpecialties(), equalTo(2));
-        assertThat(vet.getSpecialties().get(0).getName(), equalTo("dentistry"));
-        assertThat(vet.getSpecialties().get(1).getName(), equalTo("surgery"));
+        assertThat(vet.getLastName()).isEqualTo("Douglas");
+        assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
+        assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
+        assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
     }
 
     @Test
@@ -201,17 +192,17 @@ class ClinicServiceTests {
         service.save(pet7);
 
         pet7 = service.petById(7);
-        assertThat(pet7.getVisits().size(), equalTo(found + 1));
-        assertThat(visit.getId(), notNullValue());
+        assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
+        assertThat(visit.getId()).isNotNull();
     }
 
     @Test
     void shouldFindVisitsByPetId() {
         Collection<Visit> visits = service.visitsByPetId(7);
-        assertThat(visits, hasSize(2));
+        assertThat(visits).hasSize(2);
         Visit[] visitArr = visits.toArray(new Visit[0]);
-        assertThat(visitArr[0].getDate(), notNullValue());
-        assertThat(visitArr[0].getPetId(), equalTo(7));
+        assertThat(visitArr[0].getDate()).isNotNull();
+        assertThat(visitArr[0].getPetId()).isEqualTo(7);
     }
 
 }

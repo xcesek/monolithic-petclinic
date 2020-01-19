@@ -28,9 +28,7 @@ import org.springframework.samples.petclinic.model.Visit;
 import java.util.Collection;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class PetclinicIntegrationTests {
@@ -47,20 +45,20 @@ class PetclinicIntegrationTests {
     @Test
     void testFindVets() {
         Collection<Vet> all = vetsRepository.findAll();
-        assertThat(all, hasSize(6));
+        assertThat(all).hasSize(6);
     }
 
     @Test
     void testFindVisits() {
         List<Visit> visits = this.visitsRepository.findByPetId(7);
-        assertThat(visits, hasSize(2));
-        assertThat(visits.get(0).getCost(), equalTo(100));
+        assertThat(visits).hasSize(2);
+        assertThat(visits.get(0).getCost()).isEqualTo(100);
     }
 
     @Test
     void testGenerateRevenueReport() {
         List<YearlyRevenue> yearlyRevenues = this.revenueRepository.listYearlyRevenue();
-        assertThat(yearlyRevenues, hasSize(1));
-        assertThat(yearlyRevenues.get(0).getTotal(), equalTo(800L));
+        assertThat(yearlyRevenues).hasSize(1);
+        assertThat(yearlyRevenues.get(0).getTotal()).isEqualTo(800L);
     }
 }

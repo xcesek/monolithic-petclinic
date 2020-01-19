@@ -16,11 +16,9 @@
 package org.springframework.samples.petclinic.model;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.util.SerializationUtils;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Dave Syer
@@ -36,9 +34,9 @@ class VetTests {
 
         Vet other = (Vet) SerializationUtils.deserialize(SerializationUtils.serialize(vet));
 
-        assertThat(other.getFirstName(), equalTo(vet.getFirstName()));
-        assertThat(other.getLastName(), equalTo(vet.getLastName()));
-        assertThat(other.getId(), equalTo(vet.getId()));
+        assertThat(other.getFirstName()).isEqualTo(vet.getFirstName());
+        assertThat(other.getLastName()).isEqualTo(vet.getLastName());
+        assertThat(other.getId()).isEqualTo(vet.getId());
     }
 
 }

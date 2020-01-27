@@ -62,7 +62,7 @@ class VisitControllerTests {
         mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID) //
                 .param("name", "George") //
                 .param("description", "Visit Description")
-                .param("cost", "300")//
+                .param("cost", "300") //
         ) //
                 .andExpect(status().is3xxRedirection()) //
                 .andExpect(view().name("redirect:/owners/{ownerId}"));

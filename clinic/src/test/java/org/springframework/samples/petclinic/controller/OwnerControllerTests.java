@@ -132,6 +132,7 @@ class OwnerControllerTests {
     @Test
     void testProcessFindFormSuccess() throws Exception {
         given(this.service.ownerByLastName("")).willReturn(Arrays.asList(george, new Owner()));
+
         mockMvc.perform(get("/owners"))
             .andExpect(status().isOk())
             .andExpect(view().name("owners/ownersList"));
@@ -140,6 +141,7 @@ class OwnerControllerTests {
     @Test
     void testProcessFindFormByLastName() throws Exception {
         given(this.service.ownerByLastName(george.getLastName())).willReturn(Arrays.asList(george));
+
         mockMvc.perform(get("/owners")
             .param("lastName", "Franklin")
         )
@@ -209,7 +211,6 @@ class OwnerControllerTests {
             .andExpect(model().attribute("owner", hasProperty("telephone", is("6085551023"))))
             .andExpect(model().attribute("owner", hasProperty("pets", not(empty()))))
             .andExpect(model().attribute("owner", hasProperty("pets", new BaseMatcher<List<Pet>>() {
-
                 @Override
                 public boolean matches(Object item) {
                     @SuppressWarnings("unchecked")

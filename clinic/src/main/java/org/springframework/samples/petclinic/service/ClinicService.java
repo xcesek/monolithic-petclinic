@@ -6,12 +6,12 @@ import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.db.RevenueRepository;
 import org.springframework.samples.petclinic.db.VetRepository;
 import org.springframework.samples.petclinic.db.VisitRepository;
-import org.springframework.samples.petclinic.db.YearlyRevenue;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
+import org.springframework.samples.petclinic.model.YearlyRevenue;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;

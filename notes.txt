@@ -1,5 +1,5 @@
-﻿TODOs für den Code für master Branch
-------------------------------------
+﻿TODOs Code Master Branch
+------------------------
 
 * Maybe rename packages?
 * Write descriptive Readme
@@ -7,9 +7,6 @@
 
 * @DataJpaTest vs wie alles + datenbank am besten? ClinicServiceTests
 
-* Active MQ Default properties löschen?
-* Send message as String (json) so we can use the hawtio UI http://localhost:9991/hawtio to send messages
-
----
-
-Head mit 2 Branches vergleichen um beste Sachen reinzuholen
+* Active MQ als Modul herüberkopieren
+  * Active MQ Default properties löschen?
+  * Send message as String (json) so we can use the hawtio UI http://localhost:9991/hawtio to send messages

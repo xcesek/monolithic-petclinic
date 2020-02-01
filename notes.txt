@@ -13,5 +13,4 @@
 
 ---
 
-Repo mit query als CrudRepo
 Head mit 2 Branches vergleichen um beste Sachen reinzuholen

@@ -7,7 +7,6 @@
 
 * @DataJpaTest vs wie alles + datenbank am besten? ClinicServiceTests
 
-* Revenue Bericht im Menü linken
 * Active MQ Default properties löschen?
 * Send message as String (json) so we can use the hawtio UI http://localhost:9991/hawtio to send messages
 

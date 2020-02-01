@@ -64,10 +64,10 @@ class OwnerController {
     public String processCreationForm(@Valid Owner owner, BindingResult result) {
         if (result.hasErrors()) {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-        } else {
-            this.service.save(owner);
-            return "redirect:/owners/" + owner.getId();
         }
+        
+        this.service.save(owner);
+        return "redirect:/owners/" + owner.getId();
     }
 
     @GetMapping("/owners/find")
@@ -113,11 +113,11 @@ class OwnerController {
             @PathVariable("ownerId") int ownerId) {
         if (result.hasErrors()) {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
-        } else {
-            owner.setId(ownerId);
-            this.service.save(owner);
-            return "redirect:/owners/{ownerId}";
         }
+        
+        owner.setId(ownerId);
+        this.service.save(owner);
+        return "redirect:/owners/{ownerId}";
     }
 
     /**

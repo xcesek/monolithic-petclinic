@@ -87,10 +87,10 @@ class PetController {
             petForm.setOwner(owner);
             model.put("petForm", petForm);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
-        } else {
-            this.service.save(pet);
-            return "redirect:/owners/{ownerId}";
         }
+        
+        this.service.save(pet);
+        return "redirect:/owners/{ownerId}";
     }
 
     @GetMapping("/pets/{petId}/edit")
@@ -106,12 +106,12 @@ class PetController {
             petForm.setOwner(owner);
             model.put("petForm", petForm);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
-        } else {
-            Pet pet = toEntity(petForm);
-            owner.addPet(pet);
-            this.service.save(pet);
-            return "redirect:/owners/{ownerId}";
         }
+        
+        Pet pet = toEntity(petForm);
+        owner.addPet(pet);
+        this.service.save(pet);
+        return "redirect:/owners/{ownerId}";
     }
 
     private Pet toEntity(PetForm petForm) {

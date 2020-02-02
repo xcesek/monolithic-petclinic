@@ -52,7 +52,7 @@ class ManagementControllerTests {
     }
 
     @Test
-    void testShowRevemieHtml() throws Exception {
+    void testShowRevenueHtml() throws Exception {
         mockMvc.perform(get("/management/revenue")) //
             .andExpect(status().isOk()) //
             .andExpect(model().attribute("revenues", EXPECTED_REVENUES)) //

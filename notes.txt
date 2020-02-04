@@ -6,7 +6,3 @@
 * add us to license holders
 
 * @DataJpaTest vs wie alles + datenbank am besten? ClinicServiceTests
-
-* Active MQ als Modul herüberkopieren
-  * Active MQ Default properties löschen?
-  * Send message as String (json) so we can use the hawtio UI http://localhost:9991/hawtio to send messages

@@ -15,21 +15,18 @@
  */
 package org.springframework.samples.petclinic.controller;
 
-import java.util.Map;
-
-import javax.validation.Valid;
-
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * @author Juergen Hoeller
@@ -46,11 +43,6 @@ class VisitController {
 
     public VisitController(ClinicService service) {
         this.service = service;
-    }
-
-    @InitBinder
-    public void setAllowedFields(WebDataBinder dataBinder) {
-        dataBinder.setDisallowedFields("id");
     }
 
     /**
@@ -82,7 +74,8 @@ class VisitController {
         if (result.hasErrors()) {
             return "pets/createOrUpdateVisitForm";
         }
-        
+
+        visit.setId(null);
         this.service.save(visit);
         return "redirect:/owners/{ownerId}";
     }

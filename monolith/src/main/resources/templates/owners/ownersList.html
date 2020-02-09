@@ -5,6 +5,9 @@
   <body>
 
     <h2>Owners</h2>
+    <a class="btn btn-default" th:href="@{/owners/find}">Find Owners</a>
+    <a class="btn btn-default" th:href="@{/owners/new}">Add Owner</a>
+    <br /><br />
 
     <table id="owners" class="table table-striped">
         <thead>
@@ -28,6 +31,7 @@
           </tr>
         </tbody>
     </table>
+    <a class="btn btn-default" th:href="@{/owners/new}">Add Owner</a>
 
   </body>
 </html>

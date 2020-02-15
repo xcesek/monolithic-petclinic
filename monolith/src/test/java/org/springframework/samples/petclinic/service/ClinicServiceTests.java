@@ -32,6 +32,14 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * @author Ken Krebs
+ * @author Rod Johnson
+ * @author Juergen Hoeller
+ * @author Sam Brannen
+ * @author Michael Isvy
+ * @author Dave Syer
+ */
 @SpringBootTest
 class ClinicServiceTests {
 

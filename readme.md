@@ -58,6 +58,6 @@ version. Otherwise, run the application by right clicking on the `PetClinicAppli
 Visit [http://localhost:8080](http://localhost:8080) in your browser.
 
 
-# License
+## License
 
-The Spring PetClinic sample application is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](LICENSE)  

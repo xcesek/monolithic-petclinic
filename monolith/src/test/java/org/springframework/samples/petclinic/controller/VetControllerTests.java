@@ -15,14 +15,6 @@
  */
 package org.springframework.samples.petclinic.controller;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
-import java.util.Arrays;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +24,15 @@ import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Arrays;
+
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
 @WebMvcTest(controllers = {VetController.class})
 class VetControllerTests {
@@ -63,10 +64,15 @@ class VetControllerTests {
 
     @Test
     void testShowVetListHtml() throws Exception {
-        mockMvc.perform(get("/vets")) //
-            .andExpect(status().isOk()) //
-            .andExpect(model().attributeExists("vets")) //
-            .andExpect(view().name("vets/vetList"));
+        mockMvc.perform(get("/vets"))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("vets"))
+            .andExpect(view().name("vets/vetList"))
+            .andExpect(xpath("//table[@id='vets']").exists())
+            .andExpect(xpath("//table[@id='vets']/tbody/tr").nodeCount(2))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=1]/td[position()=1]").string("James Carter"))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=2]/td[position()=1]").string("Helen Leary"));
+        ;
     }
 
 }

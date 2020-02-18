@@ -24,6 +24,6 @@ class WelcomeController {
 
     @GetMapping("/")
     public String welcome() {
-        return "redirect:owners";
+        return "welcome";
     }
 }

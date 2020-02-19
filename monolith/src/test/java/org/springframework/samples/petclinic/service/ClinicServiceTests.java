@@ -18,6 +18,8 @@ package org.springframework.samples.petclinic.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
@@ -109,9 +111,9 @@ class ClinicServiceTests {
     void shouldFindAllPetTypes() {
         Collection<PetType> petTypes = service.petTypes();
 
-        PetType petType1 = EntityUtils.getById(petTypes, PetType.class, 1);
+        PetType petType1 = getById(petTypes, PetType.class, 1);
         assertThat(petType1.getName()).isEqualTo("cat");
-        PetType petType4 = EntityUtils.getById(petTypes, PetType.class, 4);
+        PetType petType4 = getById(petTypes, PetType.class, 4);
         assertThat(petType4.getName()).isEqualTo("snake");
     }
 
@@ -124,7 +126,7 @@ class ClinicServiceTests {
         Pet pet = new Pet();
         pet.setName("bowser");
         Collection<PetType> types = service.petTypes();
-        pet.setType(EntityUtils.getById(types, PetType.class, 2));
+        pet.setType(getById(types, PetType.class, 2));
         pet.setBirthDate(LocalDate.now());
         owner6.addPet(pet);
         assertThat(owner6.getPets().size()).isEqualTo(found + 1);
@@ -156,11 +158,15 @@ class ClinicServiceTests {
     void shouldFindVets() {
         Collection<Vet> vets = service.allVets();
 
-        Vet vet = EntityUtils.getById(vets, Vet.class, 3);
-        assertThat(vet.getLastName()).isEqualTo("Douglas");
-        assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
-        assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
-        assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
+        assertThat(vets)
+            .filteredOn(vet -> vet.getId() == 3)
+            .hasSize(1)
+            .first()
+            .hasFieldOrPropertyWithValue("lastName", "Douglas")
+            .hasFieldOrPropertyWithValue("nrOfSpecialties", 2)
+            .extracting(Vet::getSpecialties).asList()
+            .extracting("name")
+            .containsExactly("dentistry", "surgery");
     }
 
     @Test
@@ -197,5 +203,24 @@ class ClinicServiceTests {
 
         assertThat(yearlyRevenues).hasSize(1);
         assertThat(yearlyRevenues.get(0).getTotal()).isEqualTo(800L);
+    }
+
+    /**
+     * Look up the entity of the given class with the given id in the given collection.
+     *
+     * @param entities    the collection to search
+     * @param entityClass the entity class to look up
+     * @param entityId    the entity id to look up
+     * @return the found entity
+     * @throws ObjectRetrievalFailureException if the entity was not found
+     */
+    private <T extends BaseEntity> T getById(Collection<T> entities, Class<T> entityClass, int entityId)
+        throws ObjectRetrievalFailureException {
+        for (T entity : entities) {
+            if (entity.getId() == entityId && entityClass.isInstance(entity)) {
+                return entity;
+            }
+        }
+        throw new ObjectRetrievalFailureException(entityClass, entityId);
     }
 }

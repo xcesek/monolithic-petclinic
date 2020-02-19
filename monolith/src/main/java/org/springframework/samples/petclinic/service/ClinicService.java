@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.db.OwnerRepository;
 import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.db.RevenueRepository;
@@ -20,20 +19,26 @@ import java.util.List;
 @Service
 public class ClinicService {
 
-    @Autowired
-    private OwnerRepository owners;
+    private final OwnerRepository owners;
+    private final PetRepository pets;
+    private final VisitRepository visits;
+    private final VetRepository vets;
+    private final RevenueRepository revenueRepository;
 
-    @Autowired
-    private PetRepository pets;
+    public ClinicService(
+        OwnerRepository owners,
+        PetRepository pets,
+        VisitRepository visits,
+        VetRepository vets,
+        RevenueRepository revenueRepository
+    ) {
+        this.owners = owners;
+        this.pets = pets;
+        this.visits = visits;
+        this.vets = vets;
+        this.revenueRepository = revenueRepository;
+    }
 
-    @Autowired
-    private VisitRepository visits;
-
-    @Autowired
-    private VetRepository vets;
-
-    @Autowired
-    private RevenueRepository revenueRepository;
 
     public Collection<Owner> ownerByLastName(String lastName) {
         return owners.findByLastName(lastName);

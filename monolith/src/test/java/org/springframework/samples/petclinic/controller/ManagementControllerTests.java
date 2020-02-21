@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@WebMvcTest
+@WebMvcTest(controllers = ManagementController.class)
 class ManagementControllerTests {
 
     static final List<YearlyRevenue> EXPECTED_REVENUES = asList(

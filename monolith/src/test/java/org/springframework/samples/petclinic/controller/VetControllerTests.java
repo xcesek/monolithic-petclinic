@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
@@ -36,10 +37,17 @@ class VetControllerTests {
     void testShowVetListHtml() throws Exception {
         mockMvc.perform(get("/vets"))
             .andExpect(status().isOk())
+            .andDo(print())
             .andExpect(xpath("//table[@id='vets']").exists())
             .andExpect(xpath("//table[@id='vets']/tbody/tr").nodeCount(6))
             .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=1]/td[position()=1]").string("James Carter"))
-            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=2]/td[position()=1]").string("Helen Leary"));
+            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=1]/td[position()=2]/span").string("none"))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=2]/td[position()=1]").string("Helen Leary"))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=2]/td[position()=2]/span").string("radiology "))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=3]/td[position()=1]").string("Linda Douglas"))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=3]/td[position()=2]/span").nodeCount(2))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=3]/td[position()=2]/span[position()=1]").string("dentistry "))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=3]/td[position()=2]/span[position()=2]").string("surgery "))
         ;
     }
 

@@ -15,61 +15,29 @@
  */
 package org.springframework.samples.petclinic.controller;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.model.Specialty;
-import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
-@WebMvcTest(controllers = {VetController.class})
+@SpringBootTest
+@AutoConfigureMockMvc
 class VetControllerTests {
 
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
-    ClinicService service;
-
-    @BeforeEach
-    void setup() {
-        Vet james = new Vet();
-        james.setFirstName("James");
-        james.setLastName("Carter");
-        james.setId(1);
-        
-        Vet helen = new Vet();
-        helen.setFirstName("Helen");
-        helen.setLastName("Leary");
-        helen.setId(2);
-        Specialty radiology = new Specialty();
-        radiology.setId(1);
-        radiology.setName("radiology");
-        helen.addSpecialty(radiology);
-        
-        given(this.service.allVets()).willReturn(Arrays.asList(james, helen));
-    }
-
     @Test
     void testShowVetListHtml() throws Exception {
         mockMvc.perform(get("/vets"))
             .andExpect(status().isOk())
-            .andExpect(model().attributeExists("vets"))
-            .andExpect(view().name("vets/vetList"))
             .andExpect(xpath("//table[@id='vets']").exists())
-            .andExpect(xpath("//table[@id='vets']/tbody/tr").nodeCount(2))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr").nodeCount(6))
             .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=1]/td[position()=1]").string("James Carter"))
             .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=2]/td[position()=1]").string("Helen Leary"));
         ;

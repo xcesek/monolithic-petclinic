@@ -1,8 +1,6 @@
 ﻿TODOs Code Master Branch
 ------------------------
 
-* Maybe rename packages?
-* Write descriptive Readme
 * add us to license holders
 
 * @DataJpaTest vs wie alles + datenbank am besten? ClinicServiceTests

@@ -16,11 +16,12 @@ Spring Boot Web-MVC application renders HTML
 ## Refactoring Shortcuts
 
 * [Code Cop's IDE Shortcut Search](https://blog.code-cop.org/p/shortcut-search.html)
-* [IntelliJ Cheatsheet](https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf)
+* [Baeldung's Refactoring in IntelliJ](https://www.baeldung.com/intellij-refactoring)
 * [Baeldung's Refactoring in Eclipse](https://www.baeldung.com/eclipse-refactoring)
 
 ## Cook Book
 
+TBD insert snippets
 * Create a WebMVC controller
 * Create a REST client
 * Unit test a REST client

@@ -21,8 +21,9 @@ Spring Boot Web-MVC application renders HTML
 
 ## Cook Book
 
-* [Create a Spring RestController](https://www.baeldung.com/spring-controller-vs-restcontroller)
-* [Create a REST client](https://www.baeldung.com/rest-template)
-* [Unit test a REST client](https://www.petrikainulainen.net/programming/testing/wiremock-tutorial-introduction-to-stubbing/)
-* [Change port of Spring Boot instance](https://www.baeldung.com/spring-boot-change-port)
 * [Create Maven module](https://www.baeldung.com/maven-multi-module#generate-submodules)
+* [Change port of Spring Boot instance](https://www.baeldung.com/spring-boot-change-port)
+* [Unit test a Spring RestController](https://dimitr.im/testing-your-rest-controllers-and-clients-with-spring)
+* [Create a Spring RestController](https://www.baeldung.com/spring-controller-vs-restcontroller)
+* [Unit test a REST client](https://www.petrikainulainen.net/programming/testing/wiremock-tutorial-introduction-to-stubbing/)
+* [Create a REST client](https://www.baeldung.com/rest-template)

@@ -22,8 +22,8 @@ Spring Boot Web-MVC application renders HTML
 ## Cook Book
 
 TBD insert snippets
-* Create a WebMVC controller
-* Create a REST client
+* [Create a Spring RestController](https://www.baeldung.com/spring-controller-vs-restcontroller)
+* [Create a REST client](https://www.baeldung.com/rest-template)
 * Unit test a REST client
 * Change port of Spring Boot instance
 * Create Maven module

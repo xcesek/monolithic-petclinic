@@ -7,6 +7,8 @@ The tasks involve refactoring, TDD, branch by abstraction and introducing an eve
 
 Petclinic is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/).
 
+Find an Overview in this [PDF](https://github.com/gregorriegler/monolithic-petclinic/blob/master/Monolithic%20Pet%20Clinic.pdf)
+
 ## Working with the Monolithic Petclinic
 
 The following items should be installed in your system:
@@ -23,7 +25,7 @@ The following items should be installed in your system:
     ```
 3) **Import into IntelliJ IDEA**
 
-    In the main menu, choose `File -> Open` and select the Petclinic [pom.xml](pom.xml). Click on the `Open` button.
+    In the main menu, chooseÂ `File -> Open` and select theÂ Petclinic [pom.xml](pom.xml). Click on the `Open` button.
 
 4) **Run it on the CLI**
 

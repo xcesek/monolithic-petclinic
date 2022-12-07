@@ -15,11 +15,9 @@
  */
 package org.springframework.samples.petclinic.vets;
 
-import org.springframework.samples.petclinic.service.ClinicService;
+import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.Map;
 
 /**
  * @author Juergen Hoeller

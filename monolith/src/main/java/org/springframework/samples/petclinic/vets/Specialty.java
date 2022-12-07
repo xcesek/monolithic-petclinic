@@ -18,8 +18,6 @@ package org.springframework.samples.petclinic.vets;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import org.springframework.samples.petclinic.vets.Vet;
-import org.springframework.samples.petclinic.vets.VetBaseEntity;
 
 /**
  * Models a {@link Vet Vet's} specialty (for example, dentistry).

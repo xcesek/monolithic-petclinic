@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.vets;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+import org.springframework.samples.petclinic.vetdto.SpecialtyDto;
+import org.springframework.samples.petclinic.vetdto.VetDto;
 import org.springframework.stereotype.Service;
 
 @Service

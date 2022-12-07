@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.vets;
+package org.springframework.samples.petclinic.vetdto;
 
 public class SpecialtyDto {
   private Integer id;

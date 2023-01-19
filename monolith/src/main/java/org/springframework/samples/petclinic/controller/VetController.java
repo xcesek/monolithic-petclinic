@@ -17,7 +17,7 @@ package org.springframework.samples.petclinic.controller;
 
 import java.util.Map;
 
-import org.springframework.samples.petclinic.vets.VetService;
+import org.springframework.samples.petclinic.client.VetsGateway;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -30,15 +30,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 class VetController {
 
-    private final VetService service;
+    private final VetsGateway vetsGateway;
 
-    public VetController(VetService vetService) {
-        this.service = vetService;
+    public VetController(VetsGateway vetsGateway) {
+        this.vetsGateway = vetsGateway;
     }
 
     @GetMapping("/vets")
     public String showVetList(Map<String, Object> model) {
-        model.put("vets", this.service.allVets());
+        model.put("vets", this.vetsGateway.allVets());
         return "vets/vetList";
     }
 

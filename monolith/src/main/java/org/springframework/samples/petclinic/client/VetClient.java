@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collection;
 import java.util.List;
 
+@Primary
 @Service
 public class VetClient implements VetsGateway {
     @Autowired

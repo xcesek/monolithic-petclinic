@@ -2,12 +2,14 @@ package org.springframework.samples.petclinic.vets;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+
+import org.springframework.samples.petclinic.client.VetsGateway;
 import org.springframework.samples.petclinic.vetdto.SpecialtyDto;
 import org.springframework.samples.petclinic.vetdto.VetDto;
 import org.springframework.stereotype.Service;
 
 @Service
-public class VetService {
+public class VetService implements VetsGateway {
 
   private final VetRepository vets;
 

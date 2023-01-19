@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.samples.petclinic.vetdto.VetDto;
 
+import java.util.Collection;
 import java.util.List;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -58,7 +59,7 @@ public class VetClientTest {
                                 "        ]\n" +
                                 "    }]")));
 
-        List<VetDto> result = vetClient.getVets();
+        Collection<VetDto> result = vetClient.allVets();
 
         assertThat(result).hasSize(2);
     }

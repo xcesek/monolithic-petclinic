@@ -23,3 +23,15 @@ monolith/src/main/resources/db/data.sql
 - remove unrelated things from the new module
 - crate feature flag (or primary component / qualifiers)
 - call the new service from the original one
+
+# Plan v2
+
+- cleanup revenue repository (delete not relevant save method)
+- new model Revenue
+  - id
+  - sum of cost
+  - date (year)
+- new visit = upsert revenue
+- data pump, cronjob, MQ
+- new management service - move logic from ClinicService here
+- new mvn module

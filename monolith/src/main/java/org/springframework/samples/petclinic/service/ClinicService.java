@@ -2,15 +2,14 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.samples.petclinic.db.OwnerRepository;
 import org.springframework.samples.petclinic.db.PetRepository;
-import org.springframework.samples.petclinic.db.RevenueRepository;
 import org.springframework.samples.petclinic.db.VisitRepository;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.model.YearlyRevenue;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,20 +18,16 @@ public class ClinicService {
   private final OwnerRepository owners;
   private final PetRepository pets;
   private final VisitRepository visits;
-  private final RevenueRepository revenueRepository;
 
   public ClinicService(
       OwnerRepository owners,
       PetRepository pets,
-      VisitRepository visits,
-      RevenueRepository revenueRepository
+      VisitRepository visits
   ) {
     this.owners = owners;
     this.pets = pets;
     this.visits = visits;
-    this.revenueRepository = revenueRepository;
   }
-
 
   public Collection<Owner> ownerByLastName(String lastName) {
     return owners.findByLastName(lastName);
@@ -66,7 +61,4 @@ public class ClinicService {
     visits.save(visit);
   }
 
-  public List<YearlyRevenue> listYearlyRevenue() {
-    return revenueRepository.listYearlyRevenue();
-  }
 }

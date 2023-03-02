@@ -15,23 +15,17 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.LocalDate;
+import java.util.Collection;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.orm.ObjectRetrievalFailureException;
-import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.model.YearlyRevenue;
+import org.springframework.samples.petclinic.model.*;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Ken Krebs
@@ -181,14 +175,6 @@ class ClinicServiceTests {
         assertThat(visitArr[0].getDate()).isNotNull();
         assertThat(visitArr[0].getPetId()).isEqualTo(7);
         assertThat(visitArr[0].getCost()).isEqualTo(100);
-    }
-
-    @Test
-    void shouldListYearlyRevenue() {
-        List<YearlyRevenue> yearlyRevenues = service.listYearlyRevenue();
-
-        assertThat(yearlyRevenues).hasSize(1);
-        assertThat(yearlyRevenues.get(0).getTotal()).isEqualTo(800L);
     }
 
     /**

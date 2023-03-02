@@ -15,23 +15,21 @@
  */
 package org.springframework.samples.petclinic.controller;
 
+import static java.util.Arrays.asList;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.model.YearlyRevenue;
-import org.springframework.samples.petclinic.service.ClinicService;
+import org.springframework.samples.petclinic.management.ManagementService;
+import org.springframework.samples.petclinic.management.YearlyRevenue;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.List;
-
-import static java.util.Arrays.asList;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(controllers = ManagementController.class)
 class ManagementControllerTests {
@@ -44,7 +42,7 @@ class ManagementControllerTests {
     MockMvc mockMvc;
 
     @MockBean
-    ClinicService service;
+    ManagementService service;
 
     @BeforeEach
     void setup() {

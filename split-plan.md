@@ -26,7 +26,9 @@ monolith/src/main/resources/db/data.sql
 
 # Plan v2
 
+- new package
 - cleanup revenue repository (delete not relevant save method)
+- move yearlyrevenue model
 - new model Revenue
   - id
   - sum of cost

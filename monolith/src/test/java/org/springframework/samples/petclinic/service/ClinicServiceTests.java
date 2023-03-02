@@ -16,6 +16,8 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -23,7 +25,9 @@ import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.samples.petclinic.management.ManagementService;
 import org.springframework.samples.petclinic.model.*;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +44,9 @@ class ClinicServiceTests {
 
     @Autowired
     ClinicService service;
+
+    @MockBean
+    ManagementService managementService;
 
     @Test
     void shouldFindOwnersByLastName() {
@@ -164,6 +171,23 @@ class ClinicServiceTests {
         pet7 = service.petById(7);
         assertThat(pet7.getVisits().size()).isEqualTo(found + 1);
         assertThat(visit.getId()).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void shouldRegisterRevenue() {
+
+        Pet pet7 = service.petById(7);
+
+        Visit visit = new Visit();
+        pet7.addVisit(visit);
+        visit.setDescription("test");
+        visit.setCost(100);
+        service.save(visit);
+        service.save(pet7);
+
+
+       verify(managementService).registerNewRevenue(visit.getDate(), visit.getCost());
     }
 
     @Test

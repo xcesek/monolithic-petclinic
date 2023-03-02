@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.management;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.samples.petclinic.managementdto.YearlyRevenueDto;
@@ -19,5 +20,10 @@ public class ManagementServiceLocal implements ManagementService {
     return revenueRepository.listYearlyRevenue().stream()
         .map(r -> new YearlyRevenueDto(r.getYear(), r.getTotal()))
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public void registerNewRevenue(LocalDate paymentDate, Integer cost) {
+    revenueRepository.save(new Revenue(paymentDate, cost));
   }
 }

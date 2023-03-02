@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.samples.petclinic.db.OwnerRepository;
 import org.springframework.samples.petclinic.db.PetRepository;
 import org.springframework.samples.petclinic.db.VisitRepository;
+import org.springframework.samples.petclinic.management.ManagementService;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
@@ -19,14 +20,17 @@ public class ClinicService {
   private final PetRepository pets;
   private final VisitRepository visits;
 
+  private final ManagementService managementService;
+
   public ClinicService(
       OwnerRepository owners,
       PetRepository pets,
-      VisitRepository visits
-  ) {
+      VisitRepository visits,
+      ManagementService managementService) {
     this.owners = owners;
     this.pets = pets;
     this.visits = visits;
+    this.managementService = managementService;
   }
 
   public Collection<Owner> ownerByLastName(String lastName) {
@@ -59,6 +63,7 @@ public class ClinicService {
 
   public void save(Visit visit) {
     visits.save(visit);
+    managementService.registerNewRevenue(visit.getDate(), visit.getCost());
   }
 
 }

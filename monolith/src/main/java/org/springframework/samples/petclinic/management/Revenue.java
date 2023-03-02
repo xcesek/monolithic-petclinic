@@ -60,6 +60,11 @@ public class Revenue {
     this.paymentDate = LocalDate.now();
   }
 
+  public Revenue(LocalDate paymentDate, Integer cost) {
+    this.paymentDate = paymentDate;
+    this.cost = cost;
+  }
+
   public LocalDate getPaymentDate() {
     return this.paymentDate;
   }

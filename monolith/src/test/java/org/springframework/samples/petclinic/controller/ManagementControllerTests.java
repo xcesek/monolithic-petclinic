@@ -18,43 +18,44 @@ package org.springframework.samples.petclinic.controller;
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.samples.petclinic.management.ManagementService;
-import org.springframework.samples.petclinic.management.YearlyRevenue;
+import org.springframework.samples.petclinic.managementdto.YearlyRevenueDto;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers = ManagementController.class)
 class ManagementControllerTests {
 
-    static final List<YearlyRevenue> EXPECTED_REVENUES = asList(
-        new YearlyRevenue(2020, 333L)
-    );
+  static final List<YearlyRevenueDto> EXPECTED_REVENUES = asList(
+      new YearlyRevenueDto(2020, 333L)
+  );
 
-    @Autowired
-    MockMvc mockMvc;
+  @Autowired
+  MockMvc mockMvc;
 
-    @MockBean
-    ManagementService service;
+  @MockBean
+  ManagementService service;
 
-    @BeforeEach
-    void setup() {
-        given(this.service.listYearlyRevenue()).willReturn(EXPECTED_REVENUES);
-    }
+  @BeforeEach
+  void setup() {
+    given(this.service.listYearlyRevenue()).willReturn(EXPECTED_REVENUES);
+  }
 
-    @Test
-    void testShowRevenueHtml() throws Exception {
-        mockMvc.perform(get("/management/revenue")) //
-            .andExpect(status().isOk()) //
-            .andExpect(model().attribute("revenues", EXPECTED_REVENUES)) //
-            .andExpect(view().name("management/showRevenue"));
-    }
+  @Test
+  void testShowRevenueHtml() throws Exception {
+    mockMvc.perform(get("/management/revenue")) //
+        .andExpect(status().isOk()) //
+        .andExpect(model().attribute("revenues", EXPECTED_REVENUES)) //
+        .andExpect(view().name("management/showRevenue"));
+  }
 
 }

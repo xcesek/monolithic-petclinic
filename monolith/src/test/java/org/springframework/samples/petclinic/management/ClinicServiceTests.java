@@ -22,6 +22,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.samples.petclinic.managementdto.YearlyRevenueDto;
 
 /**
  * @author Ken Krebs
@@ -32,14 +33,14 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author Dave Syer
  */
 @SpringBootTest
-class ManagementServiceTests {
+class ManagementServiceLocalTests {
 
     @Autowired
     ManagementService service;
 
     @Test
     void shouldListYearlyRevenue() {
-        List<YearlyRevenue> yearlyRevenues = service.listYearlyRevenue();
+        List<YearlyRevenueDto> yearlyRevenues = service.listYearlyRevenue();
 
         assertThat(yearlyRevenues).hasSize(1);
         assertThat(yearlyRevenues.get(0)

@@ -1,19 +1,9 @@
 package org.springframework.samples.petclinic.management;
 
 import java.util.List;
+import org.springframework.samples.petclinic.managementdto.YearlyRevenueDto;
 
-import org.springframework.stereotype.Service;
+public interface ManagementService {
 
-@Service
-public class ManagementService {
-
-    private final RevenueRepository revenueRepository;
-
-    public ManagementService(RevenueRepository revenueRepository) {
-        this.revenueRepository = revenueRepository;
-    }
-
-    public List<YearlyRevenue> listYearlyRevenue() {
-        return revenueRepository.listYearlyRevenue();
-    }
+  List<YearlyRevenueDto> listYearlyRevenue();
 }

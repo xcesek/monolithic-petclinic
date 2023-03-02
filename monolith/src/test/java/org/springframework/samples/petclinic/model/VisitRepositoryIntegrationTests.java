@@ -13,37 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.management;
+package org.springframework.samples.petclinic.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.samples.petclinic.managementdto.YearlyRevenueDto;
+import org.springframework.samples.petclinic.db.VisitRepository;
 
-/**
- * @author Ken Krebs
- * @author Rod Johnson
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Michael Isvy
- * @author Dave Syer
- */
 @SpringBootTest
-class ManagementServiceLocalTests {
+class VisitRepositoryIntegrationTests {
 
-    @Autowired
-    ManagementService service;
+  @Autowired
+  VisitRepository visitsRepository;
 
-    @Test
-    void shouldListYearlyRevenue() {
-        List<YearlyRevenueDto> yearlyRevenues = service.listYearlyRevenue();
 
-        assertThat(yearlyRevenues).hasSize(1);
-        assertThat(yearlyRevenues.get(0)
-                .getTotal()).isEqualTo(800L);
-    }
+  @Test
+  void testFindVisits() {
+    List<Visit> visits = this.visitsRepository.findByPetId(7);
+    assertThat(visits).hasSize(2);
+    assertThat(visits.get(0).getCost()).isEqualTo(100);
+  }
+
 }

@@ -46,3 +46,8 @@ INSERT INTO visits VALUES (1, 7, '2013-01-01', 'rabies shot', 100);
 INSERT INTO visits VALUES (2, 8, '2013-01-02', 'rabies shot', 100);
 INSERT INTO visits VALUES (3, 8, '2013-01-03', 'neutered', 300);
 INSERT INTO visits VALUES (4, 7, '2013-01-04', 'spayed', 300);
+
+
+INSERT INTO revenue VALUES (1, '2013-01-04', 100);
+INSERT INTO revenue VALUES (2, '2013-01-04', 250);
+INSERT INTO revenue VALUES (3, '2013-01-04', 300);

@@ -6,6 +6,8 @@ DROP TABLE pets IF EXISTS;
 DROP TABLE types IF EXISTS;
 DROP TABLE owners IF EXISTS;
 
+DROP TABLE revenue IF EXISTS;
+
 
 CREATE TABLE vets (
   id         INTEGER IDENTITY PRIMARY KEY,
@@ -63,3 +65,9 @@ CREATE TABLE visits (
 );
 ALTER TABLE visits ADD CONSTRAINT fk_visits_pets FOREIGN KEY (pet_id) REFERENCES pets (id);
 CREATE INDEX visits_pet_id ON visits (pet_id);
+
+CREATE TABLE revenue (
+    id          INTEGER IDENTITY PRIMARY KEY,
+    payment_date        DATE,
+    cost        INTEGER NOT NULL
+);

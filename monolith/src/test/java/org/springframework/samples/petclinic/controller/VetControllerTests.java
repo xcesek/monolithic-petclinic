@@ -15,37 +15,81 @@
  */
 package org.springframework.samples.petclinic.controller;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.samples.petclinic.client.VetClient;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 class VetControllerTests {
 
     @Autowired
     MockMvc mockMvc;
 
+    private final WireMockServer wireMock = new WireMockServer(options().port(8089));
+
+    @Autowired
+    private VetClient vetClient;
+
+    @BeforeEach
+    void startWireMock() {
+        wireMock.start();
+    }
+
+    @AfterEach
+    void stopWireMock() {
+        wireMock.stop();
+    }
+
+
     @Test
     void testShowVetListHtml() throws Exception {
+        wireMock.stubFor(WireMock.get(urlEqualTo("/api/vets"))
+            .willReturn(aResponse()
+                .withHeader("Content-Type", "application/json")
+                .withBody("[\n" +
+                    "    {\n" +
+                    "        \"id\": 1,\n" +
+                    "        \"firstName\": \"James\",\n" +
+                    "        \"lastName\": \"Carter\",\n" +
+                    "        \"specialties\": []\n" +
+                    "    },\n" +
+                    "    {\n" +
+                    "        \"id\": 2,\n" +
+                    "        \"firstName\": \"Helen\",\n" +
+                    "        \"lastName\": \"Leary\",\n" +
+                    "        \"specialties\": [\n" +
+                    "            {\n" +
+                    "                \"id\": 1,\n" +
+                    "                \"name\": \"radiology\"\n" +
+                    "            }\n" +
+                    "        ]\n" +
+                    "    }]")));
+
         mockMvc.perform(get("/vets"))
             .andExpect(status().isOk())
             .andExpect(xpath("//table[@id='vets']").exists())
-            .andExpect(xpath("//table[@id='vets']/tbody/tr").nodeCount(6))
+            .andExpect(xpath("//table[@id='vets']/tbody/tr").nodeCount(2))
             .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=1]/td[position()=1]").string("James Carter"))
             .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=1]/td[position()=2]/span").string("none"))
             .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=2]/td[position()=1]").string("Helen Leary"))
             .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=2]/td[position()=2]/span").string("radiology "))
-            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=3]/td[position()=1]").string("Linda Douglas"))
-            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=3]/td[position()=2]/span").nodeCount(2))
-            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=3]/td[position()=2]/span[position()=1]").string("dentistry "))
-            .andExpect(xpath("//table[@id='vets']/tbody/tr[position()=3]/td[position()=2]/span[position()=2]").string("surgery "))
         ;
     }
 

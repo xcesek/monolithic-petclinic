@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.client;
+package org.springframework.samples.petclinic.vet;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.jupiter.api.AfterEach;
@@ -6,10 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.samples.petclinic.vetdto.VetDto;
+import org.springframework.samples.petclinic.vet.VetClient;
+import org.springframework.samples.petclinic.vet.VetDto;
 
 import java.util.Collection;
-import java.util.List;
+
 import org.springframework.test.context.ActiveProfiles;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;

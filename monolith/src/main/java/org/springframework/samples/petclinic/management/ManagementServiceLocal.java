@@ -3,9 +3,12 @@ package org.springframework.samples.petclinic.management;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.context.annotation.Primary;
 import org.springframework.samples.petclinic.managementdto.YearlyRevenueDto;
 import org.springframework.stereotype.Service;
 
+@Primary
 @Service
 public class ManagementServiceLocal implements ManagementService {
 

@@ -11,9 +11,9 @@ import java.util.List;
 @RequestMapping("api")
 public class ManagementApi {
 
-    ManagementServiceLocal managementService;
+    ManagementService managementService;
 
-    public ManagementApi(ManagementServiceLocal managementService) {
+    public ManagementApi(ManagementService managementService) {
         this.managementService = managementService;
     }
 

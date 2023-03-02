@@ -5,6 +5,9 @@ public class YearlyRevenueDto {
     private Integer year;
     private Long total;
 
+    public YearlyRevenueDto() {
+    }
+
     public YearlyRevenueDto(Integer year, Long total) {
         this.year = year;
         this.total = total;
@@ -24,5 +27,13 @@ public class YearlyRevenueDto {
             "year=" + year +
             ", total=" + total +
             '}';
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
     }
 }

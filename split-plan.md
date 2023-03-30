@@ -37,3 +37,17 @@ monolith/src/main/resources/db/data.sql
 - data pump, cronjob, MQ
 - new management service - move logic from ClinicService here
 - new mvn module
+
+
+# Plan v3
+- new package for clinic operations
+- move related classes to that package:
+  - entities (owners, pets, visits)
+  - repositories
+  - tests
+- split off the visit,... related logic/method from ClinicService (copy it to visit package and clean up)
+- create DTOs
+- create Endpoint for saving and fetching visits (VisitApi)
+- split database (extract schema and data from monolith)
+- new maven module
+- 

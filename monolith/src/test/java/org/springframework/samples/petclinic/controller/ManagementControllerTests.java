@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.samples.petclinic.management.ManagementService;
+import org.springframework.samples.petclinic.managementdto.ManagementClient;
 import org.springframework.samples.petclinic.managementdto.YearlyRevenueDto;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -43,11 +43,11 @@ class ManagementControllerTests {
   MockMvc mockMvc;
 
   @MockBean
-  ManagementService service;
+  ManagementClient managementClient;
 
   @BeforeEach
   void setup() {
-    given(this.service.listYearlyRevenue()).willReturn(EXPECTED_REVENUES);
+    given(this.managementClient.listYearlyRevenue()).willReturn(EXPECTED_REVENUES);
   }
 
   @Test

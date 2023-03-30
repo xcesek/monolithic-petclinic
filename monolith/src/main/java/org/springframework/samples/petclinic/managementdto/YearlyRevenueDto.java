@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.managementdto;
 
-public class YearlyRevenueDto {
+import java.io.Serializable;
+
+public class YearlyRevenueDto implements Serializable {
 
     private Integer year;
     private Long total;

@@ -1,7 +1,9 @@
 package org.springframework.samples.petclinic.managementdto;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +44,12 @@ public class ManagementClient implements ManagementService {
     @Override
     public void registerNewRevenue(LocalDate paymentDate,
                                    Integer cost) {
-        jmsTemplate.convertAndSend("visitCreated", new YearlyRevenueDto(paymentDate.getYear(), cost.longValue()));
+        final Map<String, Object> message = new HashMap<>();
+        message.put("paymentDate", paymentDate.toEpochDay());
+        message.put("cost", cost);
+
+        jmsTemplate.convertAndSend("visitCreated", message);
+
     }
 
 }

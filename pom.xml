@@ -20,6 +20,8 @@
         <module>monolith</module>
         <module>vets</module>
         <module>management</module>
+        <module>task-command</module>
+        <module>task-query</module>
     </modules>
 
     <properties>

@@ -1,3 +1,2 @@
-INSERT INTO revenue VALUES (1, '2013-01-04', 100);
-INSERT INTO revenue VALUES (2, '2013-01-04', 250);
-INSERT INTO revenue VALUES (3, '2013-01-04', 300);
+INSERT INTO person
+VALUES (1, 'Giancarlo', 'MEMBER', null);

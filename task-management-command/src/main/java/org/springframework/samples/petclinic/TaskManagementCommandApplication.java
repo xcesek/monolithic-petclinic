@@ -6,10 +6,10 @@ import org.springframework.jms.annotation.EnableJms;
 
 @EnableJms
 @SpringBootApplication(proxyBeanMethods = false)
-public class Application {
+public class TaskManagementCommandApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(TaskManagementCommandApplication.class, args);
     }
 
 }

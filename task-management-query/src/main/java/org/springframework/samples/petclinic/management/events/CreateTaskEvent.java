@@ -1,9 +1,10 @@
 package org.springframework.samples.petclinic.management.events;
 
-import org.springframework.samples.petclinic.management.model.TaskStatus;
+
 
 import java.util.Date;
 import java.util.Set;
+import org.springframework.samples.petclinic.management.dtos.TaskStatus;
 
 public class CreateTaskEvent {
     private Integer id;

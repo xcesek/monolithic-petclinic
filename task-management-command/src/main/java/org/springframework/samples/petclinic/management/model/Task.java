@@ -1,5 +1,9 @@
 package org.springframework.samples.petclinic.management.model;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,112 +18,108 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "tasks")
 public class Task implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "name")
-    @NotEmpty
-    private String name;
 
-    @Column(name = "due_date")
-    @NotEmpty
-    private Date dueDate;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+  @Column(name = "name")
+  @NotNull
+  private String name;
 
-    @Column(name = "comment")
-    private String comment;
+  @Column(name = "due_date")
+  @NotNull
+  private Date dueDate;
 
-    @Column(name = "completion_date")
-    private Date completionDate;
+  @Column(name = "comment")
+  private String comment;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private TaskStatus status;
+  @Column(name = "completion_date")
+  private Date completionDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
-    private Set<Instruction> instructions;
+  @Column(name = "status")
+  @Enumerated(EnumType.STRING)
+  @NotNull
+  private TaskStatus status;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "assignment", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "employee_id"))
-    private Set<Employee> assignees;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+  private Set<Instruction> instructions;
 
-    public Task() {
-        super();
-        this.instructions = new HashSet<>();
-        this.assignees = new HashSet<>();
-    }
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "assignment", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "employee_id"))
+  private Set<Employee> assignees;
 
-    public Integer getId() {
-        return id;
-    }
+  public Task() {
+    super();
+    this.instructions = new HashSet<>();
+    this.assignees = new HashSet<>();
+  }
 
-    public void setId(final Integer id) {
-        this.id = id;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setId(final Integer id) {
+    this.id = id;
+  }
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public Date getDueDate() {
-        return dueDate;
-    }
+  public void setName(final String name) {
+    this.name = name;
+  }
 
-    public void setDueDate(final Date dueDate) {
-        this.dueDate = dueDate;
-    }
+  public Date getDueDate() {
+    return dueDate;
+  }
 
-    public String getComment() {
-        return comment;
-    }
+  public void setDueDate(final Date dueDate) {
+    this.dueDate = dueDate;
+  }
 
-    public void setComment(final String comment) {
-        this.comment = comment;
-    }
+  public String getComment() {
+    return comment;
+  }
 
-    public Date getCompletionDate() {
-        return completionDate;
-    }
+  public void setComment(final String comment) {
+    this.comment = comment;
+  }
 
-    public void setCompletionDate(final Date completionDate) {
-        this.completionDate = completionDate;
-    }
+  public Date getCompletionDate() {
+    return completionDate;
+  }
 
-    public TaskStatus getStatus() {
-        return status;
-    }
+  public void setCompletionDate(final Date completionDate) {
+    this.completionDate = completionDate;
+  }
 
-    public void setStatus(final TaskStatus status) {
-        this.status = status;
-    }
+  public TaskStatus getStatus() {
+    return status;
+  }
 
-    public Set<Instruction> getInstructions() {
-        return instructions;
-    }
+  public void setStatus(final TaskStatus status) {
+    this.status = status;
+  }
 
-    public void setInstructions(final Set<Instruction> instructions) {
-        this.instructions = instructions;
-    }
+  public Set<Instruction> getInstructions() {
+    return instructions;
+  }
 
-    public Set<Employee> getAssignees() {
-        return assignees;
-    }
+  public void setInstructions(final Set<Instruction> instructions) {
+    this.instructions = instructions;
+  }
 
-    public void setAssignees(final Set<Employee> assignees) {
-        this.assignees = assignees;
-    }
+  public Set<Employee> getAssignees() {
+    return assignees;
+  }
+
+  public void setAssignees(final Set<Employee> assignees) {
+    this.assignees = assignees;
+  }
 }

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,41 +19,45 @@ import org.springframework.samples.petclinic.management.model.Employee;
 @ExtendWith(MockitoExtension.class)
 class TaskServiceTest {
 
-  @Mock
-  private TaskRepository taskRepository;
+    @Mock
+    private TaskRepository taskRepository;
 
-  @Mock
-  private EmployeeRepository employeeRepository;
+    @Mock
+    private EmployeeRepository employeeRepository;
 
-  TaskService taskService;
+    @Mock
+    private Publisher publisher;
 
-  @BeforeEach
-  void prepare() {
-    taskService = new TaskService(taskRepository, employeeRepository);
-  }
+    TaskService taskService;
 
-  @Test
-  void shouldCreateTask() {
-    var taskDTO = new TaskDTO();
-    taskDTO.setName("name");
-    taskDTO.setDueDate(new Date());
-    taskDTO.setComment("comment");
-    taskDTO.setAssignees(Set.of(1, 2));
+    @BeforeEach
+    void prepare() {
+        taskService = new TaskService(taskRepository,
+                employeeRepository,
+                publisher);
+    }
 
-    when(employeeRepository.findById(1))
-        .thenReturn(Optional.of(prepareEmployee(1)));
-    when(employeeRepository.findById(2))
-        .thenReturn(Optional.of(prepareEmployee(2)));
+    @Test
+    void shouldCreateTask() {
+        var taskDTO = new TaskDTO();
+        taskDTO.setName("name");
+        taskDTO.setDueDate(new Date());
+        taskDTO.setComment("comment");
+        taskDTO.setAssignees(Set.of(1,
+                2));
 
-    taskService.createTask(taskDTO);
+        when(employeeRepository.findById(1)).thenReturn(Optional.of(prepareEmployee(1)));
+        when(employeeRepository.findById(2)).thenReturn(Optional.of(prepareEmployee(2)));
 
-    verify(taskRepository).save(any());
-  }
+        taskService.createTask(taskDTO);
 
-  private Employee prepareEmployee(int id) {
-    var employee = new Employee();
-    employee.setId(id);
-    return employee;
-  }
+        verify(taskRepository).save(any());
+    }
+
+    private Employee prepareEmployee(int id) {
+        var employee = new Employee();
+        employee.setId(id);
+        return employee;
+    }
 
 }

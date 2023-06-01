@@ -21,7 +21,7 @@ public class CreateTaskEvent {
 
     private Set<String> instructions;
 
-    private Set<Integer> assignees;
+    private Set<CreateTaskAssignee> assignees;
 
     public Integer getId() {
         return id;
@@ -79,11 +79,11 @@ public class CreateTaskEvent {
         this.instructions = instructions;
     }
 
-    public Set<Integer> getAssignees() {
+    public Set<CreateTaskAssignee> getAssignees() {
         return assignees;
     }
 
-    public void setAssignees(final Set<Integer> assignees) {
+    public void setAssignees(final Set<CreateTaskAssignee> assignees) {
         this.assignees = assignees;
     }
 }

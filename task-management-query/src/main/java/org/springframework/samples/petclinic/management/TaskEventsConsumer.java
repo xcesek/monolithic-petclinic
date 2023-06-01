@@ -28,7 +28,7 @@ public class TaskEventsConsumer {
   @JmsListener(destination = "${management.tasks.topic}")
   public void onMessage(String message) {
     try {
-      LOGGER.info("Received Message: () ",  message);
+      LOGGER.info("Received Message: ({}) ",  message);
       CreateTaskEvent createTaskEvent = objectMapper.readValue(message, CreateTaskEvent.class);
       taskService.createTask(createTaskEvent);
     } catch (Exception e) {

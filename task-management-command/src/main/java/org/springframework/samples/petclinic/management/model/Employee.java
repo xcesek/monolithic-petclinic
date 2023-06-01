@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -38,10 +40,12 @@ public class Employee implements Serializable {
     @NotNull
     private EmployeeRole role;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supervisor_id", referencedColumnName = "id")
     private Employee supervisor;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "assignment", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
     private Set<Task> tasks;

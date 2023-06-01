@@ -1,6 +1,6 @@
 insert into employees (id, first_name, last_name, role, supervisor_id)
 values (1, 'Alice', 'Smith', 'SUPERVISOR', null),
-       (2, 'Bob', 'Jones', 'Developer', 1),
+       (2, 'Bob', 'Jones', 'PEASANT', 1),
        (3, 'Charlie', 'Brown', 'PEASANT', 1),
        (4, 'David', 'Green', 'PEASANT', 1),
        (5, 'Eve', 'White', 'PEASANT', 1);
@@ -17,3 +17,15 @@ values (1, 'Create a new feature', null, '2023-05-01', 'Feature A', 'PUBLISHED')
        (10, 'Analyze data', null, '2023-05-07', 'Data J', 'CANCELLED'),
        (11, 'Make a presentation', null, '2023-05-08', 'Presentation K', 'PUBLISHED'),
        (12, 'Plan a project', null, '2023-05-09', 'Project L', 'PUBLISHED');
+insert into assignment (task_id, employee_id)
+values (1, 1),
+       (2, 2),
+       (2, 1),
+       (3, 1),
+       (4, 2),
+       (5, 2),
+       (6, 2),
+       (7, 2),
+       (8, 2),
+       (9, 2),
+       (10, 1);
